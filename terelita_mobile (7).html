@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Terelita · Cocina Peruana</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple:      #3D2453;
+    --magenta:     #B23A8B;
+    --red:         #E15364;
+    --yellow:      #F2C606;
+    --cream:       #F7F3EE;
+    --cream-dark:  #EDE7DC;
+    --text-dark:   #2A1A3A;
+    --text-mid:    #5A3D6A;
+    --text-light:  #9A80AA;
+    --white:       #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── TOP ACCENT BAR ── */
+  .top-accent {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--magenta), var(--red), var(--yellow), var(--magenta));
+    z-index: 200;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--purple);
+    padding: 20px 20px 16px;
+    margin-top: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--magenta), var(--red), var(--yellow));
+  }
+
+  /* Geo triangles decorativos en header */
+  .header-deco {
+    position: absolute;
+    top: 0; right: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+    width: 48px;
+    align-items: center;
+    padding-top: 6px;
+    gap: 1px;
+    opacity: 0.55;
+  }
+  .header-deco span {
+    width: 0; height: 0;
+    border-left: 16px solid transparent;
+    border-right: 16px solid transparent;
+    flex-shrink: 0;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .logo-block h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 0.88;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+  }
+  .logo-sub {
+    font-size: 9px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-top: 7px;
+    font-weight: 400;
+    filter: brightness(1.5);
+  }
+
+  .header-pills {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .horario-pill {
+    display: inline-block;
+    background: rgba(178,58,139,0.3);
+    border: 1px solid var(--magenta);
+    color: var(--white);
+    font-size: 9px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .phone-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(242,198,6,0.15);
+    border: 1px solid rgba(242,198,6,0.4);
+    color: var(--yellow);
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .header-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .header-address {
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+  .header-links {
+    display: flex;
+    gap: 10px;
+  }
+  .header-links a {
+    font-size: 10px;
+    color: #e8a0d0;
+    text-decoration: none;
+    font-weight: 400;
+    opacity: 0.8;
+  }
+
+  /* ── NAV ── */
+  .nav-wrap {
+    position: sticky;
+    top: 4px;
+    z-index: 150;
+    background: var(--purple);
+    border-bottom: 3px solid var(--magenta);
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 13px 14px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    cursor: pointer;
+    border: none;
+    background: none;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: all 0.2s;
+    font-family: 'Montserrat', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .nav-tab:active { opacity: 0.7; }
+  .nav-tab.active { color: var(--white); border-bottom-color: var(--yellow); }
+
+  /* ── CONTENT ── */
+  .sections-wrap {
+    padding: 20px 16px 80px;
+  }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 6px;
+  }
+  .section-line {
+    width: 40px; height: 3px;
+    background: var(--magenta);
+    margin-bottom: 22px;
+    border-radius: 2px;
+  }
+
+  .subsection { margin-bottom: 24px; }
+  .sub-label {
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--magenta);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sub-label::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: var(--magenta);
+    opacity: 0.2;
+  }
+
+  /* ── DISH CARDS ── */
+  .dishes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .dish-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 14px 15px;
+    border: 1px solid rgba(61,36,83,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    transition: all 0.15s;
+    min-height: 52px;
+  }
+  .dish-card:active {
+    border-color: var(--magenta);
+    transform: scale(0.99);
+  }
+  .dish-card.featured {
+    background: var(--purple);
+    border-color: transparent;
+  }
+  .dish-card.featured .dish-name { color: var(--white); font-size: 15px; }
+  .dish-card.featured .dish-desc { color: rgba(255,255,255,0.6); }
+  .dish-card.featured .dish-price { color: var(--yellow); font-size: 20px; }
+
+  .dish-info { flex: 1; min-width: 0; }
+  .dish-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.3;
+    margin-bottom: 2px;
+  }
+  .dish-desc { font-size: 11px; color: var(--text-light); line-height: 1.5; font-weight: 300; }
+  .dish-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--purple);
+    white-space: nowrap;
+    padding-top: 1px;
+  }
+  .badge-rec {
+    display: inline-block;
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--purple);
+    background: var(--yellow);
+    padding: 2px 8px; border-radius: 10px; margin-top: 5px;
+  }
+
+  /* ── HIGHLIGHT ── */
+  .highlight-row {
+    display: flex;
+    gap: 14px;
+    background: var(--purple);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+    border-left: 5px solid var(--yellow);
+  }
+  .hl-emoji { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+  .hl-body { flex: 1; min-width: 0; }
+  .hl-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--white); margin-bottom: 3px;
+  }
+  .hl-desc { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .hl-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--yellow);
+    flex-shrink: 0;
+    margin-left: auto;
+    padding-left: 10px;
+  }
+
+  /* ── COMBOS ── */
+  .combo-card {
+    background: var(--cream-dark);
+    border-radius: 12px;
+    padding: 14px 16px;
+    border: 1.5px solid rgba(178,58,139,0.2);
+    margin-bottom: 8px;
+  }
+  .combo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--purple);
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 4px;
+    gap: 8px;
+  }
+  .combo-desc { font-size: 11px; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+  .combo-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; font-weight: 700; color: var(--red);
+    white-space: nowrap;
+  }
+
+  /* ── GUARNICIÓN ── */
+  .guarn-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 11px 0;
+    border-bottom: 1px dashed rgba(61,36,83,0.12);
+    font-size: 12px; color: var(--text-mid); font-weight: 300;
+  }
+  .guarn-row .gp { font-weight: 700; color: var(--purple); font-family: 'Playfair Display', serif; font-size: 14px; }
+
+  /* ── BEBIDAS ── */
+  .beb-group {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 15px 16px;
+    border: 1px solid rgba(61,36,83,0.08);
+    margin-bottom: 8px;
+  }
+  .beb-group.dark { background: var(--purple); border-color: transparent; }
+  .beb-title {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--magenta); margin-bottom: 10px;
+  }
+  .beb-group.dark .beb-title { color: #e8a0d0; }
+  .beb-item {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(61,36,83,0.06);
+    font-size: 12px; color: var(--text-dark); font-weight: 300;
+    gap: 8px;
+  }
+  .beb-group.dark .beb-item { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.08); }
+  .beb-item:last-child { border-bottom: none; }
+  .beb-p {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; color: var(--purple); font-size: 14px;
+    white-space: nowrap;
+  }
+  .beb-group.dark .beb-p { color: var(--yellow); }
+  .beb-note { font-size: 10px; color: var(--text-light); margin-left: 3px; }
+
+  /* ── WEEKEND NOTE ── */
+  .weekend-note {
+    background: rgba(225,83,100,0.07);
+    border: 1.5px solid var(--red);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 11px; color: var(--red);
+    margin: 18px 0 0;
+    line-height: 1.9;
+    font-weight: 400;
+  }
+  .weekend-note strong { color: var(--purple); font-family: 'Playfair Display', serif; }
+
+  /* ── NOSOTROS ── */
+  .nos-hero {
+    background: var(--purple);
+    border-radius: 14px;
+    padding: 24px 22px;
+    color: var(--white);
+    margin-bottom: 16px;
+    position: relative; overflow: hidden;
+  }
+  .nos-hero::before {
+    content: '';
+    position: absolute; top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: var(--magenta); opacity: 0.1;
+  }
+  .nos-hero h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 700; margin-bottom: 10px;
+  }
+  .nos-hero p { font-size: 13px; line-height: 1.85; opacity: 0.82; font-weight: 300; }
+
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .info-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(61,36,83,0.08);
+  }
+  .ic-lbl {
+    font-size: 8px; font-weight: 600;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--magenta); margin-bottom: 6px;
+  }
+  .ic-val { font-size: 12px; color: var(--text-dark); line-height: 1.75; font-weight: 300; }
+  .ic-val a { color: var(--purple); text-decoration: none; font-weight: 500; }
+  .esp-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .esp-pill {
+    background: var(--purple); color: var(--white);
+    font-size: 11px; padding: 5px 12px;
+    border-radius: 20px; font-weight: 400;
+  }
+
+  /* ── CTA BUTTONS ── */
+  .call-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--magenta); color: var(--white);
+    font-size: 12px; font-weight: 600;
+    padding: 15px 24px; border-radius: 30px;
+    text-decoration: none; letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 16px;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .call-btn:active { background: var(--purple); transform: scale(0.98); }
+
+  /* ── FLOATING CALL BUTTON ── */
+  .fab-call {
+    position: fixed;
+    bottom: 20px; right: 16px;
+    background: var(--magenta);
+    color: var(--white);
+    width: 54px; height: 54px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(178,58,139,0.45);
+    z-index: 300;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fab-call:active { transform: scale(0.93); background: var(--purple); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--purple);
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    padding: 16px 20px;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 0;
+  }
+  footer strong { color: #e8a0d0; }
+
+  /* ── CREACIONES ── */
+  .creac-grid { display: flex; flex-direction: column; gap: 8px; }
+
+</style>
+</head>
+<body>
+
+<!-- TOP ACCENT -->
+<div class="top-accent"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-deco" id="headerDeco"></div>
+  <div class="header-top">
+    <div class="logo-block">
+      <h1>Tere<br>lita</h1>
+      <div class="logo-sub">Cocina Peruana · Madrid</div>
+    </div>
+    <div class="header-pills">
+      <span class="horario-pill">Mar – Dom · 10–23h</span>
+      <a href="tel:722484867" class="phone-pill">📞 722 48 48 67</a>
+    </div>
+  </div>
+  <div class="header-info-row">
+    <span class="header-address">C. Madrid 8, Alcorcón</span>
+    <div class="header-links">
+      <a href="https://gastrobarterelita.com" target="_blank">Web</a>
+      <a href="https://instagram.com/terelita.peru" target="_blank">@terelita.peru</a>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav-tabs" id="navTabs">
+    <button class="nav-tab active" data-s="ceviches">Ceviches</button>
+    <button class="nav-tab" data-s="criollos">Criollos</button>
+    <button class="nav-tab" data-s="brasas">Brasas</button>
+    <button class="nav-tab" data-s="entrantes">Entrantes</button>
+    <button class="nav-tab" data-s="sopas">Sopas</button>
+    <button class="nav-tab" data-s="creaciones">Creaciones</button>
+    <button class="nav-tab" data-s="dulce">Dulce Perú</button>
+    <button class="nav-tab" data-s="desayunos">Desayunos</button>
+    <button class="nav-tab" data-s="cocteles">Cócteles</button>
+    <button class="nav-tab" data-s="bebidas">Bebidas</button>
+    <button class="nav-tab" data-s="nosotros">Nosotros</button>
+  </nav>
+</div>
+
+<div class="sections-wrap">
+
+<!-- CEVICHES -->
+<div class="section active" id="s-ceviches">
+  <h2 class="section-title">Ceviches &amp; Mar</h2>
+  <div class="section-line"></div>
+
+  <div class="highlight-row">
+    <div class="hl-emoji">🐟</div>
+    <div class="hl-body">
+      <div class="hl-name">Nuestro Ceviche Clásico</div>
+      <div class="hl-desc">Pescado fresco, marinado en lima, cebolla morada, choclo y camote.</div>
+      <span class="badge-rec">★ Recomendado</span>
+    </div>
+    <div class="hl-price">17,00€</div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Ceviches</div>
+    <div class="dishes-grid">
+      <div class="dish-card">
+        <div class="dish-info"><div class="dish-name">Ceviche</div><div class="dish-desc">Pescado fresco, marinado en lima, cebolla morada, choclo y camote</div></div>
+        <div class="dish-price">17,00€</div>
+      </div>
+      <div class="dish-card">
+        <div class="dish-info"><div class="dish-name">Ceviche Carretichero</div><div class="dish-desc">Nuestro ceviche clásico + chicharrón de pota</div></div>
+        <div class="dish-price">19,50€</div>
+      </div>
+      <div class="dish-card">
+        <div class="dish-info"><div class="dish-name">Leche de Tigre Terelita</div><div class="dish-desc">Pescado, lima, cebolla morada, triturada al punto de la casa + chicharrón de pota y langostino</div></div>
+        <div class="dish-price">12,00€</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Pescado y Jaleas</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pescado Frito</div><div class="dish-desc">Pescado del día + arroz, yuca frita y sarsa criolla</div></div><div class="dish-price">14,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Jalea Mixta</div><div class="dish-desc">Pescado blanco, mixtura de mariscos, marinado con un final crujiente y sarsa chalaca</div></div><div class="dish-price">26,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Chicharrón de Pescado</div><div class="dish-desc">Trozos de pescado blanco marinado en final crujiente + sarsa chalaca</div></div><div class="dish-price">19,00€</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Granos del Mar</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Arroz con Mariscos</div><div class="dish-desc">Mixtura de mariscos al estilo de la casa en arroz blanco</div></div><div class="dish-price">18,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Arroz Chaufa de Mariscos</div><div class="dish-desc">Nuestro chaufa tradicional a base de mariscos</div></div><div class="dish-price">16,00€</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Combos del Mar</div>
+    <div class="combo-card">
+      <div class="combo-name">Dúo Carretillero <span class="combo-price">22,00€</span></div>
+      <div class="combo-desc">Ceviche de Pescado + Arroz con Mariscos ó Chicharrón de Pescado</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-name">El Marino <span class="combo-price">24,00€</span></div>
+      <div class="combo-desc">Chicharrón de Pescado + Calamares + Ceviche + 2 chupitos Leche de Tigre y Yuca Frita</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-name">La Poderosa <span class="combo-price">26,00€</span></div>
+      <div class="combo-desc">Arroz con Mariscos + Ceviche + Chicharrón de Pescado</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Guarniciones</div>
+    <div class="guarn-row"><span>Porción de Arroz</span><span class="gp">4,50€</span></div>
+    <div class="guarn-row"><span>Porción de Patatas Fritas</span><span class="gp">8,50€</span></div>
+  </div>
+</div>
+
+<!-- CRIOLLOS -->
+<div class="section" id="s-criollos">
+  <h2 class="section-title">Platos Criollos</h2>
+  <div class="section-line"></div>
+
+  <div class="highlight-row">
+    <div class="hl-emoji">🥩</div>
+    <div class="hl-body">
+      <div class="hl-name">Nuestro Lomo Saltado</div>
+      <div class="hl-desc">Ternera, cebolla, tomate, patatas y arroz al wok.</div>
+      <span class="badge-rec">★ Más Pedido</span>
+    </div>
+    <div class="hl-price">17,50€</div>
+  </div>
+
+  <div class="dishes-grid">
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Lomo Saltado</div><div class="dish-desc">Ternera, cebolla, tomate, ostión, soja al wok · patatas y arroz</div></div><div class="dish-price">17,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Huanca Lomo</div><div class="dish-desc">Tallarines a la huancaína con lomito de ternera al jugo</div></div><div class="dish-price">17,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Tallarín Saltado Criollo</div><div class="dish-desc">Ternera, cebolla, tomate, ostión, soja y tallarines al wok</div></div><div class="dish-price">15,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Bistéc a lo Pobre</div><div class="dish-desc">Filete de ternera, huevo a la plancha, plátano, arroz y patatas</div></div><div class="dish-price">16,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Chicharronada</div><div class="dish-desc">Chicharrón de cerdo dorado, patatas, mote y ensalada</div></div><div class="dish-price">14,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Ají de Gallina</div><div class="dish-desc">Gallina en salsa de ají amarillo, arroz, patatas cocidas y huevo</div></div><div class="dish-price">14,50€</div></div>
+  </div>
+
+  <div class="subsection" style="margin-top:22px">
+    <div class="sub-label">Chaufas</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Arroz Chaufa de Pollo</div><div class="dish-desc">Pollo, arroz, cebollín, huevo, jengibre y soja al wok</div></div><div class="dish-price">12,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Arroz Chaufa de Ternera</div><div class="dish-desc">Carne, arroz, cebollín, huevo, jengibre y soja al wok</div></div><div class="dish-price">15,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Arroz Chaufa Mixto</div><div class="dish-desc">Carne, pollo, cerdo, arroz, cebollín, huevo, jengibre al wok</div></div><div class="dish-price">16,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Arroz Chaufa Mar y Tierra</div><div class="dish-desc">Cerdo, pollo, langostino, calamar, arroz, jengibre al wok</div></div><div class="dish-price">18,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Aeropuerto</div><div class="dish-desc">Pollo, frijol chino, tallarín chino, huevo, cebollín al wok</div></div><div class="dish-price">17,00€</div></div>
+    </div>
+  </div>
+
+  <div class="weekend-note">
+    <strong>Especiales Sábado – Domingo</strong><br>
+    Seco a la Norteña · Cabrito, chicha de jora, culantro, frejoles y yuca · 19,50€<br>
+    Arroz con Pato · ¼ de pato con zarza criolla de la casa · 18,99€
+  </div>
+</div>
+
+<!-- BRASAS -->
+<div class="section" id="s-brasas">
+  <h2 class="section-title">A la Brasa</h2>
+  <div class="section-line"></div>
+  <div class="dishes-grid">
+    <div class="dish-card featured"><div class="dish-info"><div class="dish-name">Pollo Entero a la Brasa</div><div class="dish-desc">Con porción de patatas y ensalada fresca</div></div><div class="dish-price">27,00€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">½ Pollo a la Brasa</div><div class="dish-desc">Con porción de patatas y ensalada fresca</div></div><div class="dish-price">18,99€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">¼ Pollo a la Brasa</div><div class="dish-desc">Con porción de patatas y ensalada fresca</div></div><div class="dish-price">10,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Mostrito de la Casa</div><div class="dish-desc">Pollo broster o brasa + arroz chaufa + patatas fritas y ensalada</div></div><div class="dish-price">15,00€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Pollo Broster</div><div class="dish-desc">Pollo broster, patatas fritas, arroz blanco y ensalada fresca</div></div><div class="dish-price">13,00€</div></div>
+  </div>
+</div>
+
+<!-- ENTRANTES -->
+<div class="section" id="s-entrantes">
+  <h2 class="section-title">Entrantes &amp; Para Picar</h2>
+  <div class="section-line"></div>
+
+  <div class="subsection">
+    <div class="sub-label">Anticuchos</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Anticuchos</div><div class="dish-desc">Brochetas de corazón de ternera marinadas al punto de la casa</div></div><div class="dish-price">12,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Anticuchos con Rachi</div><div class="dish-desc">Brochetas de corazón de ternera + rachi marinada al punto de la casa</div></div><div class="dish-price">15,00€</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Causas</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Causa Limeña</div><div class="dish-desc">Patata prensada, ají, palta, pollo</div></div><div class="dish-price">11,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Causa Acevichada</div><div class="dish-desc">Patata prensada, palta y ceviche</div></div><div class="dish-price">18,00€</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Para Picar</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Yuquitas Fritas</div><div class="dish-desc">8 unidades + crema a la huancaína</div></div><div class="dish-price">9,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Salchipapas</div><div class="dish-desc">Patatas + hotdog</div></div><div class="dish-price">9,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Alitas Acevichadas</div><div class="dish-desc">10 unidades, camote frito y salsa acevichada</div></div><div class="dish-price">13,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Papa Rellena</div><div class="dish-desc">Patatas rellenas de un sofrito de ternera</div></div><div class="dish-price">8,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Papa a la Huancaína</div><div class="dish-desc">Patatas cocidas con crema de huancaína</div></div><div class="dish-price">9,00€</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SOPAS -->
+<div class="section" id="s-sopas">
+  <h2 class="section-title">Sopas</h2>
+  <div class="section-line"></div>
+  <div class="dishes-grid">
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Caldo de Gallina</div><div class="dish-desc">Gallina de corral, huevo, papa, fideos, cancha</div></div><div class="dish-price">10,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Patasca</div><div class="dish-desc">Cordero, mote, papa, mondongo, hierbas y ají</div></div><div class="dish-price">10,50€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Sopa Criolla</div><div class="dish-desc">Ternera, ají panca, tomate, leche evaporada, fideo</div></div><div class="dish-price">11,00€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Sopa a la Minuta</div><div class="dish-desc">Carne molida, cebolla, tomate, ají panca, fideo</div></div><div class="dish-price">11,00€</div></div>
+  </div>
+</div>
+
+<!-- CREACIONES -->
+<div class="section" id="s-creaciones">
+  <h2 class="section-title">Nuestras Creaciones</h2>
+  <div class="section-line"></div>
+
+  <div class="subsection">
+    <div class="sub-label">Entrantes y Ensaladas</div>
+    <div class="creac-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Ensalada de Quinoa</div><div class="dish-desc">Con arroz salvaje, langostinos, vieiras flambeadas y alioli de limas encurtidas</div></div><div class="dish-price">13,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Ensalada de Miraflores</div><div class="dish-desc">Judías limeñas, beicón en tiras y maíz choclo</div></div><div class="dish-price">12,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Canelón de Causa Limeña</div><div class="dish-desc">Con pulpo, láminas de aguacate y crema de aceituna de botijo</div></div><div class="dish-price">16,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pimientos Rellenos</div><div class="dish-desc">Con seco de cordero y salsa huancaína</div></div><div class="dish-price">12,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Tiradito de Atún Rojo</div><div class="dish-desc">Con salsa de ají amarillo y cebolla encurtida</div></div><div class="dish-price">22,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Zamburiñas en Tempura</div><div class="dish-desc">Con gazpacho verde de jalapeños</div></div><div class="dish-price">16,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Ceviche Clásico de Pescado Blanco</div><div class="dish-desc">Con aliño nikkei</div></div><div class="dish-price">20,00€</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Un Paseo por las Calles de Perú</div>
+    <div class="creac-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Papas Rellenas de Carne de Ternera</div><div class="dish-desc">Con queso cheddar y salsa criolla</div></div><div class="dish-price">8,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Saam de Panceta Ahumada</div><div class="dish-desc">Con mejillones en escabeche y ensalada de hierbas</div></div><div class="dish-price">11,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Tataki de Cerdo Ibérico</div><div class="dish-desc">Con fideos de arroz, bbq coreana, chips de boniato y yuca</div></div><div class="dish-price">17,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Mollete de Chicharrón</div><div class="dish-desc">Con camote, salsa de cilantro, cebolleta roja y lima</div></div><div class="dish-price">8,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Brochetas de Pollo Anticucho</div><div class="dish-desc">Con calabaza y arroz chaufa</div></div><div class="dish-price">14,00€</div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- DULCE PERÚ -->
+<div class="section" id="s-dulce">
+  <h2 class="section-title">Dulce Perú</h2>
+  <div class="section-line"></div>
+  <div class="creac-grid">
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Cremoso Yuzu</div><div class="dish-desc">Gel maracuyá, mermelada de higos y galleta</div></div><div class="dish-price">7,00€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Buñuelos de Boniato</div><div class="dish-desc">Buñuelos de boniato y caramelo</div></div><div class="dish-price">6,00€</div></div>
+    <div class="dish-card"><div class="dish-info"><div class="dish-name">Postres del Día</div><div class="dish-desc">Consulta con nuestro staff</div></div><div class="dish-price">—</div></div>
+  </div>
+</div>
+
+<!-- DESAYUNOS -->
+<div class="section" id="s-desayunos">
+  <h2 class="section-title">Desayunos Peruanos</h2>
+  <div class="section-line"></div>
+
+  <div class="subsection">
+    <div class="sub-label">Panes</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pan con Camote</div><div class="dish-desc">Pan del día acompañado con camote frito y su zarza</div></div><div class="dish-price">7,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pan con Pollo al Jugo</div><div class="dish-desc">Pan del día acompañado con un rico salteado de pollo al jugo</div></div><div class="dish-price">7,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pan con Pollo</div><div class="dish-desc">Pan del día acompañado de un delicioso pollo deshilachado, lechuga y cremas al gusto</div></div><div class="dish-price">7,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pan con Lomo al Jugo</div><div class="dish-desc">Pan del día acompañado de un rico salteado de lomo al jugo</div></div><div class="dish-price">7,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pan con Chicharrón</div><div class="dish-desc">Pan del día acompañado por chicharrones, camote y su zarza criolla</div></div><div class="dish-price">7,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Pan con Tamal</div><div class="dish-desc">Pan del día acompañado de un rico tamal casero con sabores de chancho y de pollo, más su zarza criolla</div></div><div class="dish-price">8,00€</div></div>
+    </div>
+    <div style="background:var(--purple);border-radius:10px;padding:12px 16px;margin-top:10px;font-size:11px;color:rgba(255,255,255,0.85);text-align:center;font-weight:400;letter-spacing:0.3px;">
+      🍵 Todos nuestros panes vienen acompañados de un café o infusión
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Jugos</div>
+    <div class="dishes-grid">
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Jugo de Papaya</div></div><div class="dish-price">4,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Jugo de Fresa</div></div><div class="dish-price">4,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Jugo de Piña</div></div><div class="dish-price">4,50€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Surtido</div></div><div class="dish-price">6,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Jugo de Fresa con Leche</div></div><div class="dish-price">5,00€</div></div>
+      <div class="dish-card"><div class="dish-info"><div class="dish-name">Jugo de Papaya con Leche</div></div><div class="dish-price">5,00€</div></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="sub-label">Combo Mañanero</div>
+    <div class="combo-card">
+      <div class="combo-name">Tacu Tacu con Lomo al Jugo <span class="combo-price">10,00€</span></div>
+      <div class="combo-desc">Combinado de arroz y frijoles con un salteado de lomo de res, cebolla y tomate</div>
+    </div>
+    <div class="combo-card">
+      <div class="combo-name">Pescado Frito <span class="combo-price">10,50€</span></div>
+      <div class="combo-desc">Pescado del día, yuca frita, su zarza criolla y pan</div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓCTELES -->
+<div class="section" id="s-cocteles">
+  <h2 class="section-title">Cócteles</h2>
+  <div class="section-line"></div>
+
+  <div class="beb-group dark">
+    <div class="beb-title">Cócteles Peruanos</div>
+    <div class="beb-item">
+      <div>
+        <div style="font-weight:500;color:var(--white)">Pisco Sour</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">Pisco quebranta, zumo de limón, jarabe de goma, clara de huevo</div>
+      </div>
+      <span class="beb-p">8,00€</span>
+    </div>
+    <div class="beb-item">
+      <div>
+        <div style="font-weight:500;color:var(--white)">Pisco Terelita</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">Pisco quebranta, zumo de limón, jarabe de granadina, clara de huevo</div>
+      </div>
+      <span class="beb-p">8,00€</span>
+    </div>
+    <div class="beb-item">
+      <div>
+        <div style="font-weight:500;color:var(--white)">Chilcano de Pisco</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">Pisco quebranta, zumo de limón o maracuyá, ginger ale, Angostura</div>
+      </div>
+      <span class="beb-p">8,50€</span>
+    </div>
+    <div class="beb-item">
+      <div>
+        <div style="font-weight:500;color:var(--white)">Mojito Inca</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">Pisco quebranta, zumo de limón, azúcar, hierbabuena, agua con gas</div>
+      </div>
+      <span class="beb-p">9,00€</span>
+    </div>
+    <div class="beb-item">
+      <div>
+        <div style="font-weight:500;color:var(--white)">Machupicchu</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">Jarabe de granadina, zumo de naranja, licor de menta y pisco quebranta</div>
+      </div>
+      <span class="beb-p">9,00€</span>
+    </div>
+    <div class="beb-item">
+      <div>
+        <div style="font-weight:500;color:var(--white)">Piña Colada</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">Ron, piña, crema de coco</div>
+      </div>
+      <span class="beb-p">9,00€</span>
+    </div>
+    <div class="beb-item">
+      <div>
+        <div style="font-weight:500;color:var(--white)">Manhattan</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px">Whisky americano, vermut rosso, Angostura</div>
+      </div>
+      <span class="beb-p">9,00€</span>
+    </div>
+  </div>
+</div>
+
+<!-- BEBIDAS -->
+<div class="section" id="s-bebidas">
+  <h2 class="section-title">Bebidas</h2>
+  <div class="section-line"></div>
+
+  <div class="beb-group">
+    <div class="beb-title">Refrescos Peruanos</div>
+    <div class="beb-item"><span>Inka Cola / Piraña</span><span class="beb-p">4,00€</span></div>
+    <div class="beb-item"><span>Vaso chicha / maracuyá</span><span class="beb-p">4,00€</span></div>
+    <div class="beb-item"><span>Jarra chicha / maracuyá</span><span class="beb-p">11,00€</span></div>
+    <div class="beb-item"><span>Inka Cola 2,5 L</span><span class="beb-p">11,50€</span></div>
+  </div>
+
+  <div class="beb-group">
+    <div class="beb-title">Cerveza Peruana</div>
+    <div class="beb-item"><span>Pilsen Callao</span><span class="beb-p">4,00€</span></div>
+    <div class="beb-item"><span>Cusqueña Rubia</span><span class="beb-p">4,00€</span></div>
+    <div class="beb-item"><span>Cusqueña Negra</span><span class="beb-p">4,40€</span></div>
+    <div class="beb-item"><span>Cusqueña Trigo</span><span class="beb-p">4,70€</span></div>
+  </div>
+
+  <div class="beb-group">
+    <div class="beb-title">Bebidas Clásicas</div>
+    <div class="beb-item"><span>Caña</span><span class="beb-p">2,20€</span></div>
+    <div class="beb-item"><span>Copa</span><span class="beb-p">3,40€</span></div>
+    <div class="beb-item"><span>Tercio</span><span class="beb-p">3,40€</span></div>
+    <div class="beb-item"><span>Jarra</span><span class="beb-p">4,50€</span></div>
+    <div class="beb-item"><span>Tinto de verano</span><span class="beb-p">3,70€</span></div>
+  </div>
+
+  <div class="beb-group">
+    <div class="beb-title">Cubatas</div>
+    <div class="beb-item"><span>Ron</span><span class="beb-p">8,50€</span></div>
+    <div class="beb-item"><span>Whisky</span><span class="beb-p">8,50€</span></div>
+    <div class="beb-item"><span>Gin</span><span class="beb-p">8,50€</span></div>
+    <div class="beb-item"><span>Baileys</span><span class="beb-p">5,00€</span></div>
+  </div>
+
+  <div class="beb-group">
+    <div class="beb-title">Refrescos</div>
+    <div class="beb-item"><span>Coca-Cola / Fanta</span><span class="beb-p">3,20€</span></div>
+    <div class="beb-item"><span>Aquarius / Nestea</span><span class="beb-p">3,20€</span></div>
+    <div class="beb-item"><span>Agua</span><span class="beb-p">2,70€</span></div>
+  </div>
+
+  <div class="beb-group">
+    <div class="beb-title">Vinos</div>
+    <div class="beb-item"><span>Botella Vino Tinto / Blanco</span><span class="beb-p">15,50€</span></div>
+    <div class="beb-item"><span>Copa de Vino Tinto / Blanco</span><span class="beb-p">3,40€</span></div>
+  </div>
+
+  <div class="beb-group">
+    <div class="beb-title">Bebidas Calientes</div>
+    <div class="beb-item"><span>Café o Infusión <span class="beb-note">café, cortado, carajillo, té…</span></span><span class="beb-p">1,90€</span></div>
+  </div>
+
+
+</div>
+
+<!-- NOSOTROS -->
+<div class="section" id="s-nosotros">
+  <h2 class="section-title">Nuestra Historia</h2>
+  <div class="section-line"></div>
+  <div class="nos-hero">
+    <h2>Nuestra Esencia</h2>
+    <p>Inspirados en la cocina criolla peruana y el sabor casero que reúne familias alrededor de la mesa. Desde 2021 compartimos lo mejor de la gastronomía peruana en Madrid con recetas tradicionales, ingredientes frescos y una experiencia cálida que conecta cultura y sabor.</p>
+  </div>
+  <div class="info-grid">
+    <div class="info-card"><div class="ic-lbl">Dónde estamos</div><div class="ic-val">C. Madrid 8, Alcorcón, Madrid</div></div>
+    <div class="info-card"><div class="ic-lbl">Horario</div><div class="ic-val">Martes a Domingo<br>10:00 am — 11:00 p.m.</div></div>
+    <div class="info-card"><div class="ic-lbl">Contacto</div><div class="ic-val"><a href="tel:722484867">722 48 48 67</a><br><a href="https://gastrobarterelita.com" target="_blank">gastrobarterelita.com</a></div></div>
+    <div class="info-card"><div class="ic-lbl">Redes</div><div class="ic-val"><a href="https://instagram.com/terelita.peru" target="_blank">@terelita.peru</a></div></div>
+  </div>
+  <div class="info-card">
+    <div class="ic-lbl">Especialidades</div>
+    <div class="esp-list">
+      <span class="esp-pill">Ceviches</span>
+      <span class="esp-pill">Criollos</span>
+      <span class="esp-pill">Brasas</span>
+      <span class="esp-pill">Cócteles peruanos</span>
+    </div>
+  </div>
+  <a href="tel:722484867" class="call-btn">📞 Llama y recoge en tienda</a>
+</div>
+
+</div><!-- /sections-wrap -->
+
+<footer>
+  <strong>Terelita · Cocina Peruana</strong> &nbsp;·&nbsp; C. Madrid 8, Alcorcón &nbsp;·&nbsp; @terelita.peru
+</footer>
+
+<!-- FLOATING CALL BUTTON -->
+<a href="tel:722484867" class="fab-call" title="Llamar">📞</a>
+
+<script>
+// Header deco triangles
+const hd = document.getElementById('headerDeco');
+const colors = ['#B23A8B','#E15364','#F2C606','#F7F3EE'];
+const ops = [0.9, 0.7, 0.55, 0.2];
+for (let i = 0; i < 20; i++) {
+  const t = document.createElement('span');
+  const ci = i % 4;
+  t.style.cssText = `border-top:14px solid ${colors[ci]};opacity:${ops[ci]};display:block;`;
+  hd.appendChild(t);
+}
+
+// Tab switching with scroll to top
+document.querySelectorAll('.nav-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('s-' + tab.dataset.s).classList.add('active');
+
+    // Scroll tab into view
+    tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+    // Scroll page to content
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
